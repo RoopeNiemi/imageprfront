@@ -6,7 +6,7 @@ const getAll = () => {
 }
 
 const search = (minLon, maxLon, minLat, maxLat) => {
-    return axios.get(`${baseUrl}/images`, {
+    return axios.get(`${baseUrl}/search`, {
         params : {
             min_lon:minLon,
             max_lon:maxLon,
