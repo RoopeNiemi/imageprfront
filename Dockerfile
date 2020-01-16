@@ -14,6 +14,5 @@ COPY src/ /app/src/
 RUN npm install --silent
 RUN npm install react-scripts@3.0.1 -g --silent
 
-EXPOSE 3000
-# start app
-CMD ["npm", "start"]
+RUN npm run build
+CMD ["sh", "-c", "serve -l tcp://0.0.0.0:${PORT} -s /app/build"]
