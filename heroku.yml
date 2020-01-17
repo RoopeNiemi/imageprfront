@@ -1,6 +1,3 @@
-setup:
-  config:
-    API_URL: https://imagepr-testing.herokuapp.com
 build:
   docker:
     web: Dockerfile
