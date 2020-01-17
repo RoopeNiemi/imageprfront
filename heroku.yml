@@ -1,7 +1,4 @@
 setup:
-  addons:
-    - plan: heroku-postgresql
-      as: DATABASE
   config:
     API_URL: https://imagepr-testing.herokuapp.com
 build:
