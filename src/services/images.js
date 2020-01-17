@@ -1,11 +1,12 @@
 import axios from 'axios'
-const baseUrl = process.env.API_URL | "localhost:5000"
+const baseUrl = "https://imagepr-testing.herokuapp.com"
 
 const getAll = () => {
   return axios.get(baseUrl)
 }
 
 const search = (minLon, maxLon, minLat, maxLat) => {
+  console.log(baseUrl)
     return axios.get(`${baseUrl}/search`, {
         params : {
             min_lon:minLon,
