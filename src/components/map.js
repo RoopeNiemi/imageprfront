@@ -1,11 +1,14 @@
 import React from 'react'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import imageService from '../services/images'
 const MapView = ({ position, images }) => {
 
     const imageMarkers = () => images.map(im =>
+        <li key={im.image_name}>
         <Marker position={[im.latitude, im.longitude]}>
-            <Popup><img src={im.image_name} width="128" height="128" /></Popup>
+            <Popup><img src={imageService.getImageSource(im.image_name)} width="128" height="128" alt={im.image_name}/></Popup>
         </Marker>
+        </li>
     )
 
     return (
