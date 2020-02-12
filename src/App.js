@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import About from './components/about'
 import MapView from './components/map'
 import imageService from './services/images'
-import SearchForm from './components/SearchForm'
+import SearchForm from './components/searchForm'
+import DeleteUser from './components/deleteUser'
 import Gallery from './components/gallery'
 import Upload from './components/upload'
 import Login from './components/login'
@@ -51,6 +52,12 @@ const App = () => {
     imageService.setToken(user.access_token)
   }
 
+  const handleDelete = (username, password, event) => {
+    event.preventDefault()
+    const response = imageService.deleteUser(username, password)
+    window.localStorage.clear()
+  }
+
 
   const handleRegister = async (username, password, confirmPassword, event) => {
     event.preventDefault()
@@ -72,21 +79,10 @@ const App = () => {
       })
   }
 
-  const mapCenter = () => {
-    if (images.length === 0) {
-      return [60.2044, 24.96166]
-    }
-    const totalLat = images.map(im => im.latitude).reduce((totalLatitude, lat) => totalLatitude + lat, 0) / images.length
-    const totalLon = images.map(im => im.longitude).reduce((totalLongitude, lon) => totalLongitude + lon, 0) / images.length
-    return [totalLat, totalLon]
-
-
-  }
-
   const Home = () => {
     return (
       <div>
-        <MapView position={mapCenter()} images={images} />
+        <MapView images={images} />
         <SearchForm handleSubmit={handleSubmit} />
       </div>
     )
@@ -112,6 +108,50 @@ const App = () => {
     )
   }
 
+  const DeleteForm = () => {
+    return (
+      <DeleteUser handleDelete={handleDelete} />
+    )
+  }
+
+  const LoggedInLink = () => {
+    return (
+      <div>
+         <Link className="upload" style={navbarStyle} to="/upload">Upload</Link>
+         <Link className="delete" style={navbarStyle} to="/delete">Delete account</Link>
+      </div>
+    )
+  }
+
+  const LoggedInRoute = () => {
+    return (
+      <div>
+          <Route path="/upload" component={UploadForm} />
+          <Route path="/delete" component={DeleteForm} />
+      </div>
+    )
+  }
+
+
+  const NotLoggedInLink = () => {
+    return (
+      <div>
+        <Link className="login" style={navbarStyle} to="/login">Login</Link>
+        <Link className="register" style={navbarStyle} to="/register">Register</Link>
+      </div>
+    )
+  }
+
+  const NotLoggedInRoute = () => {
+    return (
+      <div> 
+        <Route path="/login" component={LoginForm} /> 
+        <Route path="/register" component={RegisterForm} /> 
+      </div> 
+    )
+  }
+
+
   return (
     <Router>
       <div className="container">
@@ -120,17 +160,17 @@ const App = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="#" as="span">
-                  <Link style={navbarStyle} to="/">Home</Link>
+                <Nav.Link href="#" as="span" name="home">
+                  <Link className="home" style={navbarStyle} to="/">Home</Link>
                 </Nav.Link>
                 <Nav.Link href="#" as="span">
-                  <Link style={navbarStyle} to="/about">About</Link>
+                  <Link className="about" style={navbarStyle} to="/about">About</Link>
                 </Nav.Link>
                 <Nav.Link href="#" as="span">
-                  <Link style={navbarStyle} to="/gallery">Gallery</Link>
+                  <Link className="gallery" style={navbarStyle} to="/gallery">Gallery</Link>
                 </Nav.Link>
                 <Nav.Link href="#" as="span">
-                  {user === null ? <div> <Link style={navbarStyle} to="/login">Login</Link> <Link style={navbarStyle} to="/register">Register</Link> </div> : <Link style={navbarStyle} to="/upload">Upload</Link>}
+                  {user === null ? NotLoggedInLink() : LoggedInLink()}
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -139,7 +179,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/gallery" component={Gallery} />
-        {user === null ? <div> <Route path="/login" component={LoginForm} /> <Route path="/register" component={RegisterForm} /> </div> : <Route path="/upload" component={UploadForm} />}
+        {user === null ? NotLoggedInRoute() : LoggedInRoute()}
 
       </div>
     </Router>

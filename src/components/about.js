@@ -4,8 +4,6 @@ const About = () => {
 
     const backendUrl = "https://github.com/RoopeNiemi/imagebackend"
     const frontendUrl = "https://github.com/RoopeNiemi/imageprfront"
-    const androidUrl = "https://github.com/RoopeNiemi/imagepr-android"
-
 
     return (
         <div>
@@ -22,8 +20,6 @@ const About = () => {
             <br/>
             <a href={backendUrl}>Backend source code</a><br/>
             <a href={frontendUrl}>Frontend source code</a><br/>
-            <a href={androidUrl}>Android app source code</a><br/>
-
         </div>
     )
 }

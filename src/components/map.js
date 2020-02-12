@@ -1,7 +1,18 @@
 import React from 'react'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import imageService from '../services/images'
-const MapView = ({ position, images }) => {
+const MapView = ({ images }) => {
+
+    const mapCenter = () => {
+        if (images.length === 0) {
+          return [60.2044, 24.96166]
+        }
+        const totalLat = images.map(im => im.latitude).reduce((totalLatitude, lat) => totalLatitude + lat, 0) / images.length
+        const totalLon = images.map(im => im.longitude).reduce((totalLongitude, lon) => totalLongitude + lon, 0) / images.length
+        return [totalLat, totalLon]
+    
+    
+      }
 
     const imageMarkers = () => images.map(im =>
         <li key={im.image_name}>
@@ -12,7 +23,7 @@ const MapView = ({ position, images }) => {
     )
 
     return (
-        <Map center={position} zoom={12} className="map-leaflet">
+        <Map center={mapCenter()} zoom={12} className="map-leaflet">
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

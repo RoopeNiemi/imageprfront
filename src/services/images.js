@@ -38,6 +38,16 @@ const login = async (username, password) => {
   return response.data
 }
 
+const deleteUser = async (username, password) => {
+  const data = {
+    username: username,
+    password: password
+  }
+  const response = await axios.post(`${baseUrl}/delete`, data)
+  return response.data
+
+}
+
 const register = (username, password) => {
   const data = {
     username: username,
@@ -58,5 +68,6 @@ export default {
   upload : upload,
   login: login, setToken,
   register: register,
-  getImageSource: getImageSource
+  getImageSource: getImageSource,
+  deleteUser: deleteUser
 }

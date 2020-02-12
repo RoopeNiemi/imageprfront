@@ -13,12 +13,11 @@ const Upload = () => {
 
     return (
         <div>
-        
-        <h3>Upload an image. Accepted formats: .jpg .jpeg .png.</h3>
-        <form onSubmit={handleSubmit}>
-            <input type="file" name="image"/>
-            <button type="submit" className="btn btn-primary" value="Submit">Upload</button>
-        </form>
+            <h3>Upload an image. Accepted formats: .jpg .jpeg .png.</h3>
+            <form onSubmit={handleSubmit}>
+                <input type="file" name="image"/>
+                <button type="submit" className="btn btn-primary" value="Submit">Upload</button>
+            </form>
         </div>
     )
 }
